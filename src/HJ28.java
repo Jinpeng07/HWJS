@@ -1,6 +1,4 @@
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.*;
 
 public class HJ28 {
     public static void main(String[] args) {
@@ -10,18 +8,38 @@ public class HJ28 {
         for (int i = 0; i < nums.length; i++) {
             nums[i] = in.nextInt();
         }
-        Set<Integer> set = new HashSet();
-        int res = 0;
+//        Set<Integer> set = new HashSet();
+        int total = 0;
+        Map<Integer, Integer> map = new HashMap<>();
         for (int i = 0; i < nums.length - 1; i++) {
             for (int j = i+1; j < nums.length; j++) {
                 if (isSu(nums[i], nums[j])) {
-                    set.add(nums[i]);
-                    set.add(nums[j]);
-                    res++;
+                    total++;
+                    if (!map.containsKey(nums[i])) {
+                        map.put(nums[i], 1);
+                    } else {
+                        int value1 = map.get(nums[i]);
+                        map.put(nums[i], value1 + 1);
+                    }
+                    if (!map.containsKey(nums[j])) {
+                        map.put(nums[j], 1);
+                    }else {
+                        int value2 = map.get(nums[j]);
+                        map.put(nums[j], value2 + 1);
+
+                    }
                 }
             }
         }
-        System.out.println(set);
+        System.out.println(total - map.size()/2);
+        System.out.println(total);
+        Set<Map.Entry<Integer, Integer>> entries = map.entrySet();
+        for (Map.Entry<Integer, Integer> entry : entries) {
+            System.out.print(entry.getKey());
+            System.out.print('-');
+            System.out.print(entry.getValue());
+            System.out.println();
+        }
 //        System.out.println(set.size() / 2);
 //        System.out.println(res);
     }
